@@ -19,8 +19,19 @@ model_choice = st.selectbox(
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     
-    model = joblib.load(f"model/{model_choice}.pkl")
+    model_files = {
+        "Logistic Regression": "Logistic Regression.pkl",
+        "Decision Tree": "Decision Tree.pkl",
+        "KNN": "KNN.pkl",
+        "Naive Bayes": "Naive Bayes.pkl",
+        "Random Forest": "Random Forest.pkl",
+        "XGBoost": "XGBoost.pkl"
+    }
+
+    model_path = f"model/{model_files[model_choice]}"
+    model = joblib.load(model_path)
     scaler = joblib.load("model/scaler.pkl")
+
     
     X = scaler.transform(df)
     predictions = model.predict(X)
